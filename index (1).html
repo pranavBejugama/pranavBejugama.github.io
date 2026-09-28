@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pranav Bejugama | A Year in Builds</title>
+<meta name="description" content="Pranav Bejugama, Software Engineering student at Ontario Tech. ML and full-stack projects from Oct 2025 to Sep 2026.">
+<meta property="og:title" content="Pranav Bejugama | A Year in Builds">
+<meta property="og:description" content="ML and full-stack builds: Adapta, Voxidria, Cosmik.ai, Cove and more.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0f1013">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1013'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='700' font-size='26' fill='%23f1efe9' text-anchor='middle'%3EPB%3C/text%3E%3C/svg%3E">
+<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0f1013;
+  --ink:#f1efe9;
+  --ink-soft:#b9b6ae;
+  --ink-mute:#85827b;
+  --glass:rgba(22,22,26,.58);
+  --glass-line:rgba(255,255,255,.12);
+  --chip:rgba(255,255,255,.08);
+  --btn:#f1efe9;
+  --btn-ink:#121214;
+  --focus:#ffd28a;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:6px}
+
+/* scroll track: its height sets how much scrolling each chapter takes */
+#track{display:block}
+
+/* fixed stage */
+#stage{position:fixed;inset:0;overflow:hidden;perspective:1400px}
+.wash{position:absolute;inset:0;opacity:0;will-change:opacity}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+.chapter{position:absolute;left:50%;top:46%;width:min(600px,calc(100vw - 32px));
+  transform-origin:50% 50%;will-change:transform,filter,opacity;
+  display:flex;flex-direction:column;align-items:center;gap:12px}
+.chapter .head{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.pill{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;background:var(--pill,#333);color:#fff;font-weight:600}
+.chapter h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,4.2vw,40px);line-height:1.05;margin:0;letter-spacing:-.02em;text-wrap:balance}
+.card{position:relative;width:100%;aspect-ratio:16/10;max-height:44vh;border-radius:18px;overflow:hidden;
+  background:#15161a;box-shadow:0 30px 80px -20px rgba(0,0,0,.6),0 0 0 1px var(--glass-line)}
+.visual{position:absolute;inset:0}
+.caption{position:absolute;left:0;right:0;bottom:0;padding:48px 22px 16px;text-align:center;
+  background:linear-gradient(to top,rgba(8,8,10,.92) 30%,rgba(8,8,10,0));font-size:14.5px;line-height:1.45;color:#e9e7e1;text-wrap:balance}
+.caption b{color:#fff;font-weight:600}
+.meta{font-size:13.5px;color:var(--ink-soft);text-align:center;max-width:52ch;text-wrap:balance}
+.stack{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.stack span{font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:6px;background:var(--chip);color:var(--ink-soft)}
+.links{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.lnk{font-size:13px;font-weight:600;text-decoration:none;padding:7px 14px;border-radius:999px;background:var(--chip);border:1px solid var(--glass-line)}
+.lnk:hover{background:rgba(255,255,255,.16)}
+
+/* intro */
+#intro{width:min(640px,calc(100vw - 32px));perspective:900px}
+.hero{position:relative;isolation:isolate;overflow:hidden;padding:44px 36px 38px;border-radius:28px;
+  background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.03) 55%,rgba(255,255,255,.07));
+  backdrop-filter:blur(26px) saturate(165%);-webkit-backdrop-filter:blur(26px) saturate(165%);
+  border:1px solid rgba(255,255,255,.2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -1px 0 rgba(255,255,255,.06),inset 0 0 60px rgba(255,255,255,.04),0 40px 90px -35px rgba(0,0,0,.6);
+  text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;
+  transform:translate3d(var(--hx,0px),var(--hy,0px),0) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));will-change:transform}
+.hero>*{position:relative;z-index:2}
+/* glint that follows the cursor across the glass */
+.hero::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(340px circle at var(--gx,22%) var(--gy,0%),rgba(255,255,255,.2),rgba(255,255,255,0) 62%)}
+/* streak of light that sweeps across the card */
+.hero::after{content:"";position:absolute;top:-40%;bottom:-40%;left:0;width:32%;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.08) 35%,rgba(255,255,255,.42) 50%,rgba(255,255,255,.08) 65%,rgba(255,255,255,0));
+  transform:translateX(-160%) skewX(-20deg);animation:streak 6.5s cubic-bezier(.45,.05,.25,1) .7s infinite}
+@keyframes streak{0%{transform:translateX(-160%) skewX(-20deg)}24%,100%{transform:translateX(430%) skewX(-20deg)}}
+.hero .who{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,6vw,60px);line-height:.98;letter-spacing:-.035em;margin:0;text-wrap:balance}
+.hero p{margin:0;color:var(--ink-soft);max-width:44ch;text-wrap:balance}
+.start{font:600 14px var(--body);background:var(--btn);color:var(--btn-ink);border:0;border-radius:999px;padding:10px 22px;cursor:pointer}
+.tile{position:absolute;border-radius:14px;overflow:hidden;box-shadow:0 20px 50px -15px rgba(0,0,0,.7),0 0 0 1px var(--glass-line);will-change:transform,opacity,filter}
+.tile .visual{position:absolute;inset:0}
+.tile .tag{position:absolute;left:8px;bottom:8px;font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:5px;background:rgba(0,0,0,.55);color:#fff}
+
+/* outro */
+#outro{width:min(860px,calc(100vw - 32px));top:48%}
+#outro h2{font-family:var(--display);font-weight:800;font-size:clamp(34px,6.4vw,68px);line-height:.98;letter-spacing:-.035em;text-align:center;margin:0;text-wrap:balance}
+#outro .sub{color:var(--ink-soft);text-align:center;max-width:52ch;margin:4px auto 0;text-wrap:balance}
+.contact{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:10px}
+.email{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 14px;border-radius:999px;background:var(--chip);border:1px solid var(--glass-line);font-family:var(--mono);font-size:12.5px}
+.email span{user-select:all}
+.email button{font:600 12px var(--body);border:0;border-radius:999px;padding:6px 12px;background:var(--btn);color:var(--btn-ink);cursor:pointer}
+.marquee{width:100vw;overflow:hidden;margin-top:26px;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.row{display:flex;gap:10px;width:max-content;animation:slide 50s linear infinite;padding:5px 0}
+.row.r2{animation-direction:reverse;animation-duration:60s}
+.row span{font-size:13px;padding:9px 14px;border-radius:12px;background:var(--glass);border:1px solid var(--glass-line);white-space:nowrap}
+.row span b{font-family:var(--mono);font-size:11px;color:var(--ink-mute);font-weight:400;margin-right:8px}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* bottom bar */
+#bar{position:fixed;left:0;right:0;bottom:0;z-index:5;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:14px 20px calc(14px + env(safe-area-inset-bottom,0px));gap:12px}
+.brand{font-size:12.5px;color:var(--ink-soft);white-space:nowrap}
+.brand b{color:var(--ink);font-family:var(--display);font-weight:600;font-size:14px;margin-right:6px}
+.nav{display:flex;gap:8px;position:relative}
+.nav button{font:600 13.5px var(--body);border:0;border-radius:12px;background:var(--btn);color:var(--btn-ink);padding:9px 18px;cursor:pointer;display:flex;align-items:center;gap:8px}
+.nav button.ghost{background:var(--glass);color:var(--ink);border:1px solid var(--glass-line);padding:9px 12px}
+.nav button:disabled{opacity:.35;cursor:default}
+.hint{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11.5px;
+  padding:5px 10px;border-radius:8px;background:#000;color:#fff;transition:opacity .4s}
+.prog{justify-self:end;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.prog i{display:block;width:90px;height:3px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden}
+.prog i s{display:block;height:100%;width:0;background:var(--ink)}
+
+@media (max-width:700px){
+  #bar{grid-template-columns:1fr auto;padding-inline:16px}
+  .brand{display:none}
+  .prog i{width:50px}
+  .hero{padding:30px 20px 26px}
+  .card{max-height:36vh}
+  .caption{font-size:13px;padding:36px 14px 12px}
+  .meta{font-size:12.5px}
+  .chapter{top:44%;gap:10px}
+}
+@media (max-height:640px){ .card{max-height:34vh} .meta{display:none} }
+@media (prefers-reduced-motion:reduce){ .row{animation:none} .hero::after{animation:none;opacity:0} .hero{transform:none} }
+</style>
+</head>
+<body>
+
+
+<div id="stage" aria-live="off">
+  <div id="washes"></div>
+  <div class="grain"></div>
+  <div id="tiles"></div>
+  <div class="chapter" id="intro">
+    <div class="hero">
+      <div class="who">Pranav Bejugama · Oct 2025 to Sep 2026</div>
+      <h1>Twelve months of things I built.</h1>
+      <p>Software engineering student at Ontario Tech, working across machine learning and full-stack. Seven builds, one scroll.</p>
+      <button class="start" id="startBtn">Start</button>
+    </div>
+  </div>
+  <div id="chapters"></div>
+  <div class="chapter" id="outro">
+    <h2>Next chapter: your team.</h2>
+    <p class="sub">Pranav Bejugama, B.Eng. Software Engineering (Co-op), Ontario Tech University. Looking for ML and software engineering internships.</p>
+    <div class="contact">
+      <div class="email"><a id="mail" href="mailto:pranav.bejugama@gmail.com" style="text-decoration:none">pranav.bejugama@gmail.com</a><button id="copyBtn" type="button">Copy</button></div>
+      <a class="lnk" href="https://github.com/pranavBejugama" target="_blank" rel="noopener">GitHub</a>
+      <a class="lnk" href="https://www.linkedin.com/in/pranav-bejugama/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="lnk" href="https://devpost.com/prav3035" target="_blank" rel="noopener">Devpost</a>
+    </div>
+    <div class="marquee" aria-hidden="true"><div class="row" id="m1"></div><div class="row r2" id="m2"></div></div>
+  </div>
+</div>
+
+<main id="track" aria-label="Portfolio chapters"></main>
+
+<nav id="bar" aria-label="Chapter navigation">
+  <div class="brand"><b>PB</b>A year in builds</div>
+  <div class="nav">
+    <div class="hint" id="hint">Keep scrolling or press Next</div>
+    <button class="ghost" id="prev" aria-label="Previous chapter">&larr;</button>
+    <button id="next">Next <span aria-hidden="true">&rarr;</span></button>
+  </div>
+  <div class="prog"><span>Progress <b id="pct">0%</b></span><i><s id="bar-fill"></s></i></div>
+</nav>
+
+<script>
+const CH = [
+ {id:"cosmik", month:"Oct 2025", tag:"NASA Space Apps", title:"Cosmik.ai", hue:["#1b2a6b","#5b3fb3","#0b1330"], pill:"#3a47b8",
+  cap:"Trained a CNN on light curves from <b>1,900 NASA Kepler and TESS targets</b> to flag exoplanet transits.",
+  meta:"Selected for integration into a demo satellite build with academic and industry partners.",
+  stack:["Python","PyTorch","FastAPI","React","MongoDB"],
+  links:[["GitHub","https://github.com/biswaprakash-nayak/cosmikai"]], vis:"curve"},
+ {id:"cove", month:"Oct 2025", tag:"NewHacks · UofT", title:"Cove", hue:["#0e6b6b","#1e8fb0","#0b2a33"], pill:"#0f7e86",
+  cap:"Won <b>Best Use of ElevenLabs</b> with a student travel planner that speaks its itineraries out loud.",
+  meta:"A RAG workflow chains Gemini 2.5 into ElevenLabs for real-time audio. Deployed on Vercel.",
+  stack:["Next.js","PostgreSQL","Gemini 2.5","ElevenLabs","DrizzleORM"],
+  links:[["Devpost","https://devpost.com/software/cove"]], vis:"chat"},
+ {id:"otops", month:"Nov 2025", tag:"Rover team · OTOPS", title:"Rover depth maps", hue:["#8a3a1c","#c2652d","#2a130b"], pill:"#b4532a",
+  cap:"Stereo-camera <b>depth maps in OpenCV</b> for autonomous obstacle detection on Ontario Tech's rover.",
+  meta:"Ground Control and Navigation team, Canadian International Rover Challenge. Nov 2025 to Jul 2026.",
+  stack:["Python","OpenCV","Stereo vision"], links:[], vis:"depth"},
+ {id:"fanverse", month:"Feb 2026", tag:"Internship · Fanverse", title:"Reading 50,000 fans", hue:["#8c1f55","#c24a7a","#2a0c1c"], pill:"#b0326a",
+  cap:"Turned <b>50,000+ raw social posts</b> into records scored for sentiment, emotion, behavioral pathway and priority.",
+  meta:"Pushed the pivot from Streamlit to Next.js. The product reached the company's first 2 clients about a month early.",
+  stack:["Python","distilRoBERTa","VADER","Gemini API"],
+  links:[["Fanverse","https://wearefanverse.com"]], vis:"bars"},
+ {id:"voxidria", month:"Mar 2026", tag:"DeerHacks · UTM", title:"Voxidria", hue:["#2f6b4a","#6aa37a","#0d2217"], pill:"#3d7d57",
+  cap:"Screens for Parkinson's risk from a short voice recording. <b>Top 10 of 50 teams.</b>",
+  meta:"XGBoost reached 97.4% on the UCI dataset. A CNN trained on 80+ real recordings reached 90%.",
+  stack:["Python","XGBoost","TensorFlow","Parselmouth","Next.js"],
+  links:[["Devpost","https://devpost.com/software/voxidria"]], vis:"wave"},
+ {id:"faculty", month:"May 2026", tag:"Faculty of Business & IT", title:"Course planning platform", hue:["#1f4f8f","#3c7bd0","#0c1a2e"], pill:"#2e62ad",
+  cap:"A course management platform <b>in active use by the Dean</b>, covering 328+ courses and 100+ faculty records.",
+  meta:"A reconciliation pipeline cut a multi-day review cycle down to hours. Role-based access for 7 user roles.",
+  stack:["Next.js","TypeScript","Supabase","PostgreSQL","Vercel"], links:[], vis:"table"},
+ {id:"adapta", month:"Sep 2026", tag:"Self-hosted LLM", title:"Adapta", hue:["#8a5a12","#d19a36","#261807"], pill:"#a8701c",
+  cap:"An MCP server that lets coding agents call <b>a fine-tuned Qwen2.5-7B</b> on a self-hosted A40 GPU.",
+  meta:"QLoRA fine-tuning with base-vs-adapter evaluation, plus API keys, rate limiting and usage logs.",
+  stack:["Python","FastAPI","vLLM","RunPod","PEFT/QLoRA"], links:[], vis:"term"},
+];
+const N = CH.length + 2; // intro + chapters + outro
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- visuals ---------- */
+function rng(seed){return()=>{seed=(seed*16807)%2147483647;return(seed-1)/2147483646}}
+function curve(){
+  const r=rng(7), W=600, H=375, pts=[];
+  for(let i=0;i<=160;i++){const x=i/160;let y=.5+(r()-.5)*.06;
+    const dip=(c)=>Math.exp(-Math.pow((x-c)/.018,2))*.2; y+=dip(.3)+dip(.68);
+    pts.push(`${40+x*(W-60)},${60+y*(H-170)}`)}
+  return `<svg class="visual" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice"><rect width="${W}" height="${H}" fill="#0b1026"/>
+  ${[0,1,2,3].map(i=>`<line x1="40" x2="${W-20}" y1="${80+i*45}" y2="${80+i*45}" stroke="#ffffff" stroke-opacity=".07"/>`).join("")}
+  <polyline points="${pts.join(" ")}" fill="none" stroke="#9fb0ff" stroke-width="2"/>
+  <circle cx="${40+.3*(W-60)}" cy="210" r="22" fill="none" stroke="#ffd28a" stroke-dasharray="4 4"/>
+  <circle cx="${40+.68*(W-60)}" cy="210" r="22" fill="none" stroke="#ffd28a" stroke-dasharray="4 4"/>
+  <text x="40" y="36" fill="#c9d0ff" font-family="JetBrains Mono,monospace" font-size="13">normalized flux · KIC target</text>
+  <text x="${W-20}" y="36" text-anchor="end" fill="#ffd28a" font-family="JetBrains Mono,monospace" font-size="13">transit candidate</text></svg>`;
+}
+function wave(){
+  const r=rng(3), W=600, H=375; let d="";
+  for(let i=0;i<220;i++){const x=30+i*(W-60)/220;const env=Math.sin(i/220*Math.PI)*.8+.2;const a=(r()*.9+.1)*env*110;d+=`M${x.toFixed(1)} ${160-a/2}v${a.toFixed(1)}`}
+  return `<svg class="visual" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice"><rect width="${W}" height="${H}" fill="#0f1f16"/>
+  <path d="${d}" stroke="#9ed8ae" stroke-width="1.6" stroke-linecap="round"/>
+  <text x="30" y="36" fill="#bfe5c8" font-family="JetBrains Mono,monospace" font-size="13">sustained "ahh" · 16 acoustic biomarkers</text>
+  <g font-family="JetBrains Mono,monospace" font-size="12" fill="#bfe5c8"><text x="30" y="262">jitter</text><text x="30" y="286">shimmer</text><text x="30" y="310" opacity="0">.</text></g>
+  <rect x="110" y="252" width="200" height="8" rx="4" fill="#ffffff" fill-opacity=".1"/><rect x="110" y="252" width="84" height="8" rx="4" fill="#9ed8ae"/>
+  <rect x="110" y="276" width="200" height="8" rx="4" fill="#ffffff" fill-opacity=".1"/><rect x="110" y="276" width="120" height="8" rx="4" fill="#9ed8ae"/></svg>`;
+}
+function bars(){
+  const W=600,H=375, rows=[["sentiment",[.46,.32,.22],["#ff9fc6","#c24a7a","#5a1a36"]],["emotion",[.3,.25,.2,.25],["#ffc1d9","#ff8ab5","#b0326a","#5a1a36"]],["pathway",[.5,.3,.2],["#ff9fc6","#b0326a","#5a1a36"]],["priority",[.18,.42,.4],["#ffd0e2","#e0679b","#5a1a36"]]];
+  let g=""; rows.forEach((row,i)=>{let x=150;const y=70+i*46;g+=`<text x="30" y="${y+14}" fill="#ffd9e8" font-family="JetBrains Mono,monospace" font-size="13">${row[0]}</text>`;
+    row[1].forEach((w,j)=>{const ww=w*400;g+=`<rect x="${x}" y="${y}" width="${ww-3}" height="20" rx="4" fill="${row[2][j]}"/>`;x+=ww})});
+  return `<svg class="visual" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice"><rect width="${W}" height="${H}" fill="#1f0b16"/>${g}
+  <text x="30" y="40" fill="#ffd9e8" font-family="JetBrains Mono,monospace" font-size="12" opacity=".75">records scored, 4 dimensions</text></svg>`;
+}
+function chat(){
+  return `<div class="visual" style="background:linear-gradient(160deg,#0c3a40,#0a2328);padding:26px 28px;display:flex;flex-direction:column;gap:10px;font-size:14px">
+   <div style="align-self:flex-end;background:#1e8fb0;color:#fff;padding:9px 13px;border-radius:14px 14px 4px 14px;max-width:70%">3 days in Montréal, student budget?</div>
+   <div style="align-self:flex-start;background:rgba(255,255,255,.1);color:#e7f6f7;padding:9px 13px;border-radius:14px 14px 14px 4px;max-width:78%">Day 1: Old Port on foot, lunch at Marché Jean-Talon, sunset from Mont Royal.</div>
+   <div style="align-self:flex-start;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.1);padding:8px 12px;border-radius:999px;color:#bfeef2;font-family:JetBrains Mono,monospace;font-size:12px">
+     <svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 2l9 5-9 5z" fill="#bfeef2"/></svg>
+     <svg width="120" height="18" viewBox="0 0 120 18">${Array.from({length:30},(_,i)=>`<rect x="${i*4}" y="${9-(3+((i*7)%9))}" width="2" height="${2*(3+((i*7)%9))}" fill="#bfeef2"/>`).join("")}</svg> voice
+   </div></div>`;
+}
+function table(){
+  const rows=[["BUSI 1600","Sec 001","Assigned","ok"],["INFR 2810","Sec 002","Assigned","ok"],["BUSI 2150","Sec 001","Load over limit","warn"],["INFR 1100","Sec 003","Assigned","ok"],["BUSI 3040","Sec 001","Research leave","warn"],["INFR 3200","Sec 002","Assigned","ok"]];
+  return `<div class="visual" style="background:#0d1a2c;padding:22px 24px;font-family:JetBrains Mono,monospace;font-size:12.5px;color:#cfe0f7">
+   <div style="display:flex;justify-content:space-between;opacity:.7;margin-bottom:10px"><span>fall_planning.xlsx · preview</span><span>validate</span></div>
+   ${rows.map(r=>`<div style="display:grid;grid-template-columns:1fr .8fr 1.4fr auto;gap:10px;padding:7px 0;border-top:1px solid rgba(255,255,255,.08)"><span>${r[0]}</span><span style="opacity:.7">${r[1]}</span><span style="opacity:.85">${r[2]}</span><span style="padding:1px 8px;border-radius:5px;background:${r[3]==="ok"?"rgba(120,200,150,.18)":"rgba(255,190,90,.2)"};color:${r[3]==="ok"?"#9fe0b6":"#ffcf86"}">${r[3]==="ok"?"valid":"check"}</span></div>`).join("")}</div>`;
+}
+function term(){
+  return `<div class="visual" style="background:#17120a;padding:22px 24px;font-family:JetBrains Mono,monospace;font-size:12.5px;line-height:1.75;color:#f0dfbf">
+   <div style="display:flex;gap:6px;margin-bottom:12px"><i style="width:10px;height:10px;border-radius:50%;background:#ff6b5b"></i><i style="width:10px;height:10px;border-radius:50%;background:#ffbd4c"></i><i style="width:10px;height:10px;border-radius:50%;background:#44c95a"></i></div>
+   <div><span style="color:#d19a36">agent</span> → tools/call <span style="color:#fff">adapta.generate</span></div>
+   <div style="opacity:.75">gateway   POST /v1/generate  api-key ✓  rate-limit ✓</div>
+   <div style="opacity:.75">model     qwen2.5-7b + qlora adapter</div>
+   <div style="opacity:.75">runtime   vLLM on RunPod A40</div>
+   <div style="opacity:.75">eval      base vs adapter · side by side</div>
+   <div><span style="color:#44c95a">200</span> response streamed · usage logged</div></div>`;
+}
+function depth(){
+  const c=document.createElement("canvas");c.className="visual";c.width=600;c.height=375;c.style.width="100%";c.style.height="100%";
+  const x=c.getContext("2d");const g=x.createLinearGradient(0,0,0,375);g.addColorStop(0,"#1a0730");g.addColorStop(.45,"#6b1d6e");g.addColorStop(1,"#f6a33a");
+  x.fillStyle=g;x.fillRect(0,0,600,375);
+  const r=rng(11);for(let i=0;i<9;i++){const cx=r()*600,cy=180+r()*170,rad=30+r()*70;const rg=x.createRadialGradient(cx,cy,4,cx,cy,rad);
+    rg.addColorStop(0,"rgba(255,236,160,.95)");rg.addColorStop(.6,"rgba(240,120,60,.5)");rg.addColorStop(1,"rgba(240,120,60,0)");x.fillStyle=rg;x.beginPath();x.arc(cx,cy,rad,0,7);x.fill()}
+  x.fillStyle="rgba(255,255,255,.85)";x.font="13px JetBrains Mono, monospace";x.fillText("disparity → depth · near is bright",22,32);
+  x.strokeStyle="#ffffff";x.setLineDash([5,5]);x.strokeRect(330,200,150,110);x.setLineDash([]);x.fillText("obstacle",336,196);
+  return c;
+}
+const VIS={curve,wave,bars,chat,table,term,depth};
+function makeVisual(kind){const v=VIS[kind]();if(typeof v==="string"){const t=document.createElement("template");t.innerHTML=v.trim();return t.content.firstChild}return v}
+
+/* ---------- build ---------- */
+const washes=document.getElementById("washes"), chWrap=document.getElementById("chapters"), track=document.getElementById("track");
+const washEls=[], chEls=[document.getElementById("intro")];
+const introHue=["#1d4a3c","#2d7a66","#0d1f1a"], outroHue=["#3a3f55","#6b708f","#15161d"];
+function addWash(h){const w=document.createElement("div");w.className="wash";
+  w.style.background=`radial-gradient(40% 50% at 25% 35%,${h[0]},transparent 70%),radial-gradient(45% 55% at 78% 62%,${h[1]},transparent 70%),${h[2]}`;
+  washes.appendChild(w);washEls.push(w)}
+addWash(introHue);
+CH.forEach(c=>{
+  addWash(c.hue);
+  const el=document.createElement("article");el.className="chapter";el.style.setProperty("--pill",c.pill);el.setAttribute("aria-label",c.title);
+  el.innerHTML=`<div class="head"><span class="pill">${c.month}</span><h2>${c.title}</h2></div>
+   <div class="card"><div class="caption">${c.cap}</div></div>
+   <p class="meta">${c.meta}</p>
+   <div class="stack">${c.stack.map(s=>`<span>${s}</span>`).join("")}</div>
+   ${c.links.length?`<div class="links">${c.links.map(l=>`<a class="lnk" href="${l[1]}" target="_blank" rel="noopener">${l[0]} ↗</a>`).join("")}</div>`:""}`;
+  el.querySelector(".card").prepend(makeVisual(c.vis));
+  chWrap.appendChild(el);chEls.push(el);
+});
+addWash(outroHue);chEls.push(document.getElementById("outro"));
+/* SEG = screens of scrolling per chapter transition. Raise it for a slower, longer zoom. */
+const SEG=1.5, HOLD=.14;
+function sizeTrack(){track.style.height=((N-1)*SEG*innerHeight+innerHeight)+"px"}
+sizeTrack();addEventListener("resize",sizeTrack);
+
+/* intro floating tiles: mini previews of each build at different depths */
+const tilesEl=document.getElementById("tiles");
+const TILE_POS=[[-36,-27,.9],[30,-33,.7],[-39,22,.8],[37,20,1],[-8,-41,.55],[15,38,.6],[-27,3,.45]];
+const tiles=CH.map((c,i)=>{const t=document.createElement("div");t.className="tile";const [x,y,z]=TILE_POS[i];
+  const w=Math.round(170+z*90);t.style.width=w+"px";t.style.height=Math.round(w*.62)+"px";
+  t.appendChild(makeVisual(c.vis));const tg=document.createElement("span");tg.className="tag";tg.textContent=c.title;t.appendChild(tg);
+  tilesEl.appendChild(t);return {el:t,x,y,z,w}});
+
+/* marquee */
+const skills=[["ml","PyTorch"],["ml","TensorFlow"],["ml","XGBoost"],["llm","QLoRA fine-tuning"],["llm","Model Context Protocol"],["llm","RAG"],["cv","OpenCV"],["web","Next.js"],["web","TypeScript"],["api","FastAPI"],["db","PostgreSQL"],["db","Supabase"],["ops","Docker"],["ops","CI/CD on Vercel"],["lang","Python"],["lang","C++"]];
+const chip=s=>`<span><b>${s[0]}</b>${s[1]}</span>`;
+document.getElementById("m1").innerHTML=(skills.slice(0,8).map(chip).join("")).repeat(4);
+document.getElementById("m2").innerHTML=(skills.slice(8).map(chip).join("")).repeat(4);
+
+/* ---------- motion ---------- */
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const pct=document.getElementById("pct"), fill=document.getElementById("bar-fill"), hint=document.getElementById("hint");
+const prevB=document.getElementById("prev"), nextB=document.getElementById("next");
+let target=0, cur=0;
+
+function place(el,d,kind,side){
+  const vw=innerWidth, mobile=vw<700, a=Math.abs(d);
+  let x=0,y=0,s=1,b=0,o=1;
+  if(reduce){o=clamp(1-a*1.6,0,1)}
+  else if(kind==="outro"){ // rises out of the distance
+    s=1-clamp(d,0,1)*.25; b=clamp(d,0,2)*8; o=clamp(1-d*1.1,0,1); y=clamp(d,0,1)*60;
+  } else if(d>=0){ // waiting small and blurred in the distance, on its own side
+    x=side*d*(mobile?62:38)*vw/100; s=1-clamp(d,0,1.5)*.45; b=d*7; o=d<1?clamp(1-d*.8,0,1):0; y=-d*14;
+  } else { // zooming toward the camera and out past its side
+    const e=a*a*(3-2*Math.min(a,1)); // slow start, so the first scrolls feel like a zoom
+    x=side*Math.min(a,1.4)*(mobile?46:34)*vw/100*e/Math.max(a,.001); s=1+a*1.1; b=e*16; o=clamp(1-e*1.4,0,1); y=a*18;
+  }
+  el.style.transform=`translate(-50%,-50%) translate3d(${x}px,${y}px,0) scale(${s})`;
+  el.style.filter=b>.2?`blur(${b.toFixed(1)}px)`:"none";
+  el.style.opacity=o.toFixed(3);
+  el.style.zIndex=String(100-Math.round(d*10));
+  el.style.visibility=o<.01?"hidden":"visible";
+  el.style.pointerEvents=a<.5?"auto":"none";
+  el.setAttribute("aria-hidden",a<.5?"false":"true");
+}
+function render(p){
+  chEls.forEach((el,i)=>place(el,i-p,i===0?"intro":i===N-1?"outro":"ch",i===0?-1:(i%2?1:-1)));
+  washEls.forEach((w,i)=>{w.style.opacity=clamp(1-Math.abs(i-p),0,1).toFixed(3)});
+  // intro tiles scatter outward and blur as the intro leaves
+  const t=clamp(p,0,1.2), vw=innerWidth, vh=innerHeight, mob=vw<700;
+  tiles.forEach((tl,i)=>{const spread=1+t*(1.4+tl.z);const drift=reduce?0:Math.sin(performance.now()/2200+i)*6;
+    const par=reduce?0:(22+tl.z*78)*(1-clamp(t,0,1));
+    const tx=tl.x*vw/100*(mob?1.05:1)*spread-mx*par, ty=tl.y*vh/100*(mob?.95:1)*spread+drift-my*par;
+    tl.el.style.transform=`translate(${vw/2-tl.w/2}px,${vh/2-tl.w*.31}px) translate3d(${tx}px,${ty}px,0) scale(${(.75+tl.z*.35)*(1+t*.8)*(mob?.62:1)})`;
+    tl.el.style.opacity=reduce?clamp(1-t*2,0,1):clamp(1-t*1.4,0,1)*(0.55+tl.z*.45);
+    tl.el.style.filter=reduce?"none":`blur(${((1-tl.z)*3+t*10).toFixed(1)}px)`;
+    tl.el.style.visibility=t>.95?"hidden":"visible";
+  });
+  const prog=Math.round(p/(N-1)*100);pct.textContent=prog+"%";fill.style.width=prog+"%";
+  hint.style.opacity=p>.6&&p<1.6?"1":"0";
+  prevB.disabled=p<.5;
+  const last=p>N-1.5;nextB.disabled=last;nextB.firstChild.textContent=last?"The end ":"Next ";
+}
+let lastT=performance.now();
+/* cursor parallax: tiles and the glass card drift opposite to the pointer */
+let mx=0,my=0,tmx=0,tmy=0;const hero=document.querySelector(".hero");
+addEventListener("pointermove",e=>{if(e.pointerType==="touch"||reduce)return;
+  tmx=e.clientX/innerWidth*2-1;tmy=e.clientY/innerHeight*2-1;
+  const r=hero.getBoundingClientRect();
+  hero.style.setProperty("--gx",((e.clientX-r.left)/r.width*100).toFixed(1)+"%");
+  hero.style.setProperty("--gy",((e.clientY-r.top)/r.height*100).toFixed(1)+"%");});
+document.addEventListener("pointerleave",()=>{tmx=0;tmy=0});
+function loop(now){
+  const r=clamp(scrollY/(SEG*innerHeight),0,N-1), i=Math.floor(r), u=r-i;
+  // hold each card centred for a moment at both ends of its segment, then ease through the move
+  const k=clamp((u-HOLD)/(1-2*HOLD),0,1);
+  target=Math.min(N-1,i+k*k*(3-2*k));
+  const dt=Math.min(64,now-lastT);lastT=now;
+  cur+=(target-cur)*(reduce?1:1-Math.exp(-dt/85));
+  const m=1-Math.exp(-dt/140);mx+=(tmx-mx)*m;my+=(tmy-my)*m;
+  hero.style.setProperty("--hx",(-mx*10).toFixed(2)+"px");hero.style.setProperty("--hy",(-my*8).toFixed(2)+"px");
+  hero.style.setProperty("--ry",(mx*4).toFixed(2)+"deg");hero.style.setProperty("--rx",(-my*3.5).toFixed(2)+"deg");
+  if(Math.abs(target-cur)<.0005)cur=target;
+  render(cur);
+  requestAnimationFrame(loop);
+}
+function go(i){i=clamp(i,0,N-1);scrollTo({top:i*SEG*innerHeight,behavior:reduce?"auto":"smooth"})}
+nextB.onclick=()=>go(Math.round(target)+1);
+prevB.onclick=()=>go(Math.round(target)-1);
+document.getElementById("startBtn").onclick=()=>go(1);
+addEventListener("keydown",e=>{if(e.target.closest&&e.target.closest("input,textarea"))return;
+  if(e.key==="ArrowRight"){e.preventDefault();go(Math.round(target)+1)} if(e.key==="ArrowLeft"){e.preventDefault();go(Math.round(target)-1)}});
+document.getElementById("copyBtn").onclick=async e=>{const b=e.currentTarget;
+  try{await navigator.clipboard.writeText(document.getElementById("mail").textContent);b.textContent="Copied"}
+  catch{const r=document.createRange();r.selectNodeContents(document.getElementById("mail"));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Selected"}
+  setTimeout(()=>b.textContent="Copy",1600)};
+render(0);requestAnimationFrame(loop);
+</script>
+
+</body>
+</html>
